@@ -1,3 +1,13 @@
+.venv
+kenlm
+src/rnng-pytorch
+work/results
+**/fairseq
+**/rnng
+permuted_samples
+permuted_splits
+tree_per_line
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
