@@ -1,6 +1,5 @@
 # word-order-universals-cogLM
-This repository contains the code of the paper: [Emergent Word Order Universals from Cognitively-Motivated Language Models](https://arxiv.org/abs/2402.12363) (Kuribayashi et al., 2024)
-
+This repository contains the code of the paper: [Emergent Word Order Universals from Cognitively-Motivated Language Models](https://arxiv.org/abs/2402.12363) (Kuribayashi et al., 2024).
 This paper has been accepted to ACL 2024. If the official proceeding is provided, please cite it.
 ```
 @misc{kuribayashi2024emergentwordorderuniversals,
