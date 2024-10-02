@@ -17,7 +17,7 @@ debugpy==1.8.2
 decorator==5.1.1
 exceptiongroup==1.2.2
 executing==2.0.1
-fairseq==0.12.2
+-e git+ssh://git@github.com/kuribayashi4/word-order-universals-cogLM.git@f1a2c831a1bd32b7a23b6dba31981354290e8382#egg=fairseq&subdirectory=src/fairseq
 filelock==3.15.4
 fonttools==4.53.1
 fsspec==2024.6.1
@@ -68,6 +68,7 @@ regex==2024.5.15
 requests==2.32.3
 sacrebleu==2.4.2
 safetensors==0.4.5
+scikit-learn==1.5.2
 scipy==1.13.1
 seaborn==0.13.2
 sentencepiece==0.2.0
@@ -76,6 +77,7 @@ stack-data==0.6.3
 statsmodels==0.14.2
 sympy==1.13.0
 tabulate==0.9.0
+threadpoolctl==3.5.0
 tokenizers==0.20.0
 torch==2.3.1
 torchaudio==2.3.1
