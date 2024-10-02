@@ -1,20 +1,31 @@
 # word-order-universals-cogLM
-This repository contains the code of the paper: [Emergent Word Order Universals from Cognitively-Motivated Language Models](https://arxiv.org/abs/2402.12363) (Kuribayashi et al., 2024).
-This paper has been accepted to ACL 2024. If the official proceeding is provided, please cite it.
+This repository contains the code of the ACL 2024 paper: [Emergent Word Order Universals from Cognitively-Motivated Language Models](https://arxiv.org/abs/2402.12363) (Kuribayashi et al., 2024).
 ```
-@misc{kuribayashi2024emergentwordorderuniversals,
-      title={Emergent Word Order Universals from Cognitively-Motivated Language Models}, 
-      author={Tatsuki Kuribayashi and Ryo Ueda and Ryo Yoshida and Yohei Oseki and Ted Briscoe and Timothy Baldwin},
-      year={2024},
-      eprint={2402.12363},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL},
-      url={https://arxiv.org/abs/2402.12363}, 
+@inproceedings{kuribayashi-etal-2024-emergent,
+    title = "Emergent Word Order Universals from Cognitively-Motivated Language Models",
+    author = "Kuribayashi, Tatsuki  and
+      Ueda, Ryo  and
+      Yoshida, Ryo  and
+      Oseki, Yohei  and
+      Briscoe, Ted  and
+      Baldwin, Timothy",
+    booktitle = "Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = aug,
+    year = "2024",
+    address = "Bangkok, Thailand",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.acl-long.781",
+    doi = "10.18653/v1/2024.acl-long.781",
+    pages = "14522--14543",
 }
 ```
 
 ## Codes
-Python 3.9.18 was used
+Environment: Python 3.9.18
+
+Our experimental results (Steps 2 and 3) are stored in `work/results/regression`.  
+Just starting from Step 4 with these data will yield the results (figures and tables) shown in our paper.
+
 ```
 pip install -r requirements.txt
 git clone https://github.com/kpu/kenlm.git
@@ -23,7 +34,7 @@ cd build
 cmake ..
 make -j 4
 
-# Step 1: Preprocess
+# Step 1: Preprocessing
 bash script/gen_data.sh
 python src/load_tree_per_line.py
 bash scripts/preprocess.sh
@@ -33,6 +44,7 @@ bash scripts/preprocess4fairseq.sh
 bash scripts/experiment_ngram.sh
 bash scripts/experiment_lms.sh
 bash scripts/experiment_rnng.sh
+python src/llama2.py -m meta-llama/Llama-2-7b-hf -b 4 -q 8bit # set huggingface key in src/config.py
 
 # Step 3: Experiments
 python src/export_language_stats.py
@@ -41,13 +53,9 @@ src/export_stack_depth.ipynb
 src/regression.ipynb
 
 # Step 4: Visualization
-src/figures.ipynb
-src/tables.ipynb
+src/visualize_figures.ipynb
+src/visualize_tables.ipynb
 ```
-Notes:
-- Codes for Step 2 are a work in progress.
-- Our experimental results (Steps 2 and 3) are stored in `work/results/regression`. Just starting from Step 4 with these data will yield the results (figures and tables) shown in our paper.
-
 
 ## Credits
 We used a modified version of codes originally released in: 

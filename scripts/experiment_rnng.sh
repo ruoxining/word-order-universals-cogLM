@@ -9,45 +9,50 @@ do
         for TRAVERSAL in top_down in_order
         do
             # RNNG
-            SAVE_DIR=work/results/"${LANG}"/"${FOLD}"/"${TRAVERSAL}"/rnng
+            if [ "${TRAVERSAL}" == "top_down" ]; then
+                TRAVERSAL_PATH="td"
+            elif [ "${TRAVERSAL}" == "in_order" ]; then
+                TRAVERSAL_PATH="lc-as"
+            fi
+            SAVE_DIR=work/results/"${LANG}"/"${FOLD}"/"${TRAVERSAL_PATH}"/rnng
             mkdir -p "${SAVE_DIR}"
             SAVE_PATH="${SAVE_DIR}"/model.bin
 
             python src/rnng-pytorch/train.py \
             --do_train \
             --do_test \
-            --train_file work/tree_per_line/"${LANG}"/"${FOLD}"-train.json \
-            --val_file work/tree_per_line/"${LANG}"/"${FOLD}"-val.json \
-            --test_file work/tree_per_line/"${LANG}"/"${FOLD}"-test.json \
+            --train_file work/tree_per_line/"${LANG}"/"${FOLD}"/rnng/train.json \
+            --val_file work/tree_per_line/"${LANG}"/"${FOLD}"/rnng/val.json \
+            --test_file work/tree_per_line/"${LANG}"/"${FOLD}"/rnng/test.json \
             --save_path "${SAVE_PATH}" \
             --batch_size 512 --fixed_stack --strategy "${TRAVERSAL}" \
             --dropout 0.3 --optimizer adam --lr 0.001 --gpu "${GPU}" \
-            --sp_model work/tree_per_line/"${LANG}"/"${FOLD}"-spm.model --num_epoch 10 --seed "${FOLD}"
+            --sp_model work/tree_per_line/"${LANG}"/"${FOLD}"/rnng/spm.model --num_epoch 10 --seed "${FOLD}"
 
             python src/rnng-pytorch/beam_search.py \
-            --test_file work/tree_per_line/"${LANG}"/"${FOLD}"-test.tokens \
+            --test_file work/tree_per_line/"${LANG}"/"${FOLD}"/rnng/test.tokens \
             --model_file "${SAVE_PATH}" --batch_size 20 --beam_size 100 --strategy "${TRAVERSAL}" \
             --word_beam_size 10 --shift_size 1 --block_size 1000 --gpu "${GPU}" --lm_output_file "${SAVE_PATH}".surprisals.fixed_beam.100_10_1 > "${SAVE_PATH}".parsed.fixed_beam.100_10_1
             touch "${SAVE_DIR}/finish.txt"
 
             # SRNNG
-            SAVE_DIR=work/results/"${LANG}"/"${FOLD}"/"${TRAVERSAL}"/srnng
+            SAVE_DIR=work/results/"${LANG}"/"${FOLD}"/"${TRAVERSAL_PATH}"/srnng
             mkdir -p "${SAVE_DIR}"
             SAVE_PATH="${SAVE_DIR}"/model.bin
 
             python src/rnng-pytorch/train.py \
             --do_train \
             --do_test \
-            --train_file work/tree_per_line/"${LANG}"/"${FOLD}"-train.json \
-            --val_file work/tree_per_line/"${LANG}"/"${FOLD}"-val.json \
-            --test_file work/tree_per_line/"${LANG}"/"${FOLD}"-test.json \
+            --train_file work/tree_per_line/"${LANG}"/"${FOLD}"/rnng/train.json \
+            --val_file work/tree_per_line/"${LANG}"/"${FOLD}"/rnng/val.json \
+            --test_file work/tree_per_line/"${LANG}"/"${FOLD}"/rnng/test.json \
             --save_path "${SAVE_PATH}" \
             --batch_size 512 --fixed_stack --strategy "${TRAVERSAL}" \
             --dropout 0.3 --optimizer adam --lr 0.001 --gpu "${GPU}" \
-            --sp_model work/tree_per_line/"${LANG}"/"${FOLD}"-spm.model --num_epoch 10 --seed "${FOLD}" --use_elman --w_dim 64 --h_dim 64
+            --sp_model work/tree_per_line/"${LANG}"/"${FOLD}"/rnng/spm.model --num_epoch 10 --seed "${FOLD}" --use_elman --w_dim 64 --h_dim 64
 
             python src/rnng-pytorch/beam_search.py \
-            --test_file work/tree_per_line/"${LANG}"/"${FOLD}"-test.tokens \
+            --test_file work/tree_per_line/"${LANG}"/"${FOLD}"/rnng/test.tokens \
             --model_file "${SAVE_PATH}" --batch_size 20 --beam_size 100 --strategy "${TRAVERSAL}" \
             --word_beam_size 10 --shift_size 1 --block_size 1000 --gpu "${GPU}" --lm_output_file "${SAVE_PATH}".surprisals.fixed_beam.100_10_1 > "${SAVE_PATH}".parsed.fixed_beam.100_10_1
         done
