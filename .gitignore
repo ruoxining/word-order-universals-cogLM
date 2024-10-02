@@ -1,9 +1,8 @@
 .venv
 kenlm
-src/rnng-pytorch
-work/results
-**/fairseq
-**/rnng
+work/results/*
+!work/results/regression
+!work/results/lang*
 permuted_samples
 permuted_splits
 tree_per_line
@@ -66,7 +65,7 @@ cover/
 *.pot
 
 # Django stuff:
-*.log
+# *.log
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
