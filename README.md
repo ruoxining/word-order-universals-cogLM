@@ -28,6 +28,11 @@ Just starting from Step 4 with these data will yield the results (figures and ta
 
 ```
 pip install -r requirements.txt
+pip install https://github.com/kpu/kenlm/archive/master.zip
+cd src/fairseq
+pip install -e .
+cd ..
+cd ..
 git clone https://github.com/kpu/kenlm.git
 mkdir -p build
 cd build
@@ -35,7 +40,7 @@ cmake ..
 make -j 4
 
 # Step 1: Preprocessing
-bash script/gen_data.sh
+bash scripts/gen_data.sh
 python src/load_tree_per_line.py
 bash scripts/preprocess.sh
 bash scripts/preprocess4fairseq.sh
